@@ -16,6 +16,11 @@ const createOrder = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ order });
 };
 
+const getAllOrders = async (req, res) => {
+  const orders = await Order.find({});
+  res.status(StatusCodes.OK).json({ orders });
+};
 module.exports = {
   createOrder,
+  getAllOrders,
 };
