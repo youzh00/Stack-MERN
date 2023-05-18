@@ -15,7 +15,7 @@ export default function SelectInput({ products, selected, setSelected }) {
             Product
           </Listbox.Label>
           <div className="relative mt-1">
-            <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+            <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-darkGreen focus:outline-none focus:ring-1 focus:ring-darkGreen sm:text-sm">
               <span className="block truncate">{selected?.name}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
@@ -38,7 +38,7 @@ export default function SelectInput({ products, selected, setSelected }) {
                     key={product?._id}
                     className={({ active }) =>
                       classNames(
-                        active ? "bg-indigo-600 text-white" : "text-gray-900",
+                        active ? "bg-darkGreen text-white" : "text-gray-900",
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
                     }
@@ -58,7 +58,7 @@ export default function SelectInput({ products, selected, setSelected }) {
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? "text-white" : "text-indigo-600",
+                              active ? "text-white" : "text-darkGreen",
                               "absolute inset-y-0 right-0 flex items-center pr-4"
                             )}
                           >

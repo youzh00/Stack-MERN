@@ -19,10 +19,25 @@ export default function ProductPage() {
   const [selected, setSelected] = useState(data?.products[0]);
   const [quantity, setQuantity] = useState(1);
 
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
   useEffect(() => {
     setSelected(data?.products[0]);
   }, [isLoading]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:5000/api/orders", {
+      userName: name,
+      phone,
+      unityPrice: selected.unityPrice,
+      address,
+      product: selected?._id,
+      quantity,
+    });
+  };
   return (
     <div className="flex min-h-screen items-center justify-center gap-8 bg-white">
       {!isLoading && (
@@ -35,7 +50,7 @@ export default function ProductPage() {
             />
           </div>
           <div className="max-w-sm flex-1 ">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <SelectInput
                 products={data?.products || []}
                 selected={selected}
@@ -55,11 +70,15 @@ export default function ProductPage() {
                       type="number"
                       name="quantity"
                       id="quantity"
-                      className="block w-full rounded-md border-gray-300  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-gray-300  focus:border-darkGreen focus:ring-darkGreen sm:text-sm"
                       value={quantity}
                       min={1}
-                      onChange={(e) => setQuantity(e.target.value)}
-                      aria-describedby="quantity-currency"
+                      onChange={(e) => {
+                        if (e.target.value === "" || Number(e.target.value) < 1)
+                          setQuantity(1);
+                        else setQuantity(Math.abs(Number(e.target.value)));
+                      }}
+                      aria-describedby="quantity"
                     />
                   </div>
                 </div>
@@ -79,7 +98,7 @@ export default function ProductPage() {
                       type="text"
                       name="price"
                       id="price"
-                      className="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 pl-7 focus:border-darkGreen focus:ring-darkGreen sm:text-sm"
                       placeholder="0.00"
                       readOnly
                       value={selected?.unityPrice || 0}
@@ -103,7 +122,7 @@ export default function ProductPage() {
                       type="text"
                       name="price"
                       id="totalPrice"
-                      className="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 pl-7 focus:border-darkGreen focus:ring-darkGreen sm:text-sm"
                       placeholder="0.00"
                       readOnly
                       value={selected?.unityPrice * quantity || 0}
@@ -127,7 +146,8 @@ export default function ProductPage() {
                       name="name"
                       required
                       id="name"
-                      className="block w-full rounded-md border-gray-300  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => setName(e.target.value)}
+                      className="block w-full rounded-md border-gray-300  focus:border-darkGreen focus:ring-darkGreen sm:text-sm"
                     />
                   </div>
                 </div>
@@ -141,11 +161,16 @@ export default function ProductPage() {
                   <div className="relative mt-1 rounded-md shadow-sm">
                     <input
                       type="text"
-                      placeholder="EX: 0689021736"
                       name="phone"
-                      required
                       id="phone"
-                      className="block w-full rounded-md border-gray-300  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      placeholder="EX: 0689021736"
+                      required
+                      minLength={10}
+                      maxLength={10}
+                      pattern="0[0-9]{9}"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="block w-full rounded-md border-gray-300 focus:border-darkGreen focus:ring-darkGreen sm:text-sm"
                     />
                   </div>
                 </div>
@@ -164,7 +189,8 @@ export default function ProductPage() {
                       name="address"
                       id="address"
                       required
-                      className="block w-full resize-none rounded-md border-gray-300  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="block w-full resize-none rounded-md border-gray-300  focus:border-darkGreen focus:ring-darkGreen sm:text-sm"
                     />
                   </div>
                 </div>
