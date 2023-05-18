@@ -8,6 +8,8 @@ const productRouter = require("./routes/productRoutes");
 const orderRouter = require("./routes/orderRoutes");
 const errorHanlder = require("./middlware/errorHandler");
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Welcome world!");
 });

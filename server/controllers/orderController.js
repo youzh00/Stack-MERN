@@ -4,11 +4,11 @@ const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 
 const createOrder = async (req, res) => {
-  const { productId } = req.body;
-  const dbProduct = await Product.findOne({ _id: productId });
+  const { product } = req.body;
+  const dbProduct = await Product.findOne({ _id: product });
 
   if (!dbProduct) {
-    throw new CustomError.NotFoundError(`No product with id : ${productId}`);
+    throw new CustomError.NotFoundError(`No product with id : ${product}`);
   }
 
   const order = await Order.create(req.body);
