@@ -22,7 +22,7 @@ const getAllOrders = async (req, res) => {
   const skip = (page - 1) * limit;
 
   const statusFilter = req.query.status; // Get the status filter from the query parameters
-
+  console.log("Status : ", statusFilter);
   let query = {};
 
   if (statusFilter === "verified") {
@@ -49,7 +49,18 @@ const getAllOrders = async (req, res) => {
   });
 };
 
+const deleteOrderById = async (req, res) => {
+  const orderId = req.params.id;
+
+  const deletedOrder = await Order.findByIdAndRemove(orderId);
+
+  if (!deletedOrder) {
+    throw new CustomError.NotFoundError("Order not found.");
+  }
+  res.status(StatusCodes.ACCEPTED).json({ deletedOrder });
+};
 module.exports = {
   createOrder,
   getAllOrders,
+  deleteOrderById,
 };
