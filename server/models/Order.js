@@ -28,6 +28,10 @@ const OrderSchema = mongoose.Schema(
       enum: ["pending", "unverified", "verified"],
       default: "pending",
     },
+    address: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -7,9 +7,9 @@ const connectDB = require("./db/connect");
 const productRouter = require("./routes/productRoutes");
 const orderRouter = require("./routes/orderRoutes");
 const errorHanlder = require("./middlware/errorHandler");
-
+const cors = require("cors");
 app.use(express.json());
-
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Welcome world!");
 });
