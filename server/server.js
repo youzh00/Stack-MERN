@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 
-app.use(errorHandlerMiddleware);
+app.use(errorHanlder);
 
 const port = process.env.PORT || 5000;
 const start = async () => {
