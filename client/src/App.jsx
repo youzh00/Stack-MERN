@@ -1,7 +1,13 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductPage from "./pages/ProductPage";
+const queryClient = new QueryClient();
 
 function App() {
-  return <ProductPage />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ProductPage />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
