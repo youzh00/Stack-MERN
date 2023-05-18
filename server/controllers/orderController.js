@@ -49,23 +49,6 @@ const getAllOrders = async (req, res) => {
   });
 };
 
-const getAllOrdersFiltred = async (req, res) => {
-  const verifiedOnly = req.query.verifiedOnly === "true";
-  const pendingOnly = req.query.pendingOnly === "true";
-  const unverifiedOnly = req.query.unverifiedOnly === "true";
-
-  let query = {};
-  if (verifiedOnly) {
-    query = { status: "verified" };
-  } else if (unverifiedOnly) {
-    query = { status: "unverified" };
-  } else if (pendingOnly) {
-    query = { status: "pending" };
-  }
-
-  const orders = await Order.find(query);
-  res.status(StatusCodes.OK).json({ orders });
-};
 module.exports = {
   createOrder,
   getAllOrders,
