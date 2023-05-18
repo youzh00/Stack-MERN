@@ -3,7 +3,11 @@ import formPlugin from "@tailwindcss/forms";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        darkGreen: "#314D3E",
+      },
+    },
   },
   plugins: [formPlugin],
 };

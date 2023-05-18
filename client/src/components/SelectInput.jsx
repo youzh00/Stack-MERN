@@ -6,9 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function SelectInput({ products }) {
-  const [selected, setSelected] = useState(products[0]);
-
+export default function SelectInput({ products, selected, setSelected }) {
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
