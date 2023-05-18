@@ -8,7 +8,7 @@ const ProductSchema = new mongoose.Schema(
       required: [true, "Please provide product name"],
       maxlength: [100, "Name can not be more than 100 characters"],
     },
-    price: {
+    unityPrice: {
       type: Number,
       required: [true, "Please provide product price"],
       default: 0,

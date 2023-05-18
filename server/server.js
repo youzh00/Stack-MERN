@@ -6,6 +6,7 @@ const app = express();
 const connectDB = require("./db/connect");
 const productRouter = require("./routes/productRoutes");
 const orderRouter = require("./routes/orderRoutes");
+const errorHanlder = require("./middlware/errorHandler");
 
 app.get("/", (req, res) => {
   res.send("Welcome world!");
@@ -13,6 +14,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
+
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 const start = async () => {
