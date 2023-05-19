@@ -2,6 +2,7 @@ import SelectInput from "../components/SelectInput";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 async function getProducts() {
   const { data: products } = await axios.get(
@@ -15,7 +16,7 @@ export default function ProductPage() {
     queryKey: ["products"],
     queryFn: getProducts,
   });
-
+  const navivate = useNavigate();
   const [selected, setSelected] = useState(data?.products[0]);
   const [quantity, setQuantity] = useState(1);
 
@@ -37,6 +38,7 @@ export default function ProductPage() {
       product: selected?._id,
       quantity,
     });
+    navivate("/orders");
   };
   return (
     <div className="flex min-h-screen items-center justify-center gap-8 bg-white">

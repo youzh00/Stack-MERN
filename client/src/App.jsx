@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductPage from "./pages/ProductPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import OrdersPage from "./pages/OrdersPage";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: "orders",
-    element: <div>orders</div>,
+    element: <OrdersPage />,
   },
 ]);
 
