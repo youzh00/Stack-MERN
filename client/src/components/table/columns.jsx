@@ -17,7 +17,7 @@ export const columns = [
   {
     accessorKey: "status",
     header: "Status",
-
+    filterFn: "equalsString",
     meta: {
       getCellContext: (context) => {
         // console.log("Inside columns ");

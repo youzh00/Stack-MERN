@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataTable } from "../components/table/DataTable";
 import { columns } from "../components/table/columns";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const stats = [
   { name: "Total sales", stat: "30,000" },
@@ -8,172 +11,22 @@ const stats = [
   { name: "Revenue generated", stat: "$80,000" },
 ];
 
-const data = [
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee07c880a233a856b461",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    totalPrice: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Verified",
-    createdAt: "2023-05-18T09:21:11.863Z",
-    updatedAt: "2023-05-18T09:21:11.863Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee0dc880a233a856b464",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    total: 80,
-
-    product: "6465e887cbc34f8354380adc",
-    status: "Pending",
-    createdAt: "2023-05-18T09:21:17.119Z",
-    updatedAt: "2023-05-18T09:21:17.119Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee17c880a233a856b467",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    product: "6465e887cbc34f8354380adc",
-    status: "Pending",
-    createdAt: "2023-05-18T09:21:27.601Z",
-    updatedAt: "2023-05-18T09:21:27.601Z",
-    __v: 0,
-  },
-  {
-    _id: "6465ee35c064d004c01e9431",
-    userName: "Youssef Zahi",
-    phone: "+212633186193",
-    unityPrice: 20,
-    quantity: 4,
-    product: "6465e887cbc34f8354380adc",
-    status: "Unverified",
-    createdAt: "2023-05-18T09:21:57.902Z",
-    updatedAt: "2023-05-18T09:21:57.902Z",
-    __v: 0,
-  },
-  {
-    _id: "64664848869e5a2feb02098a",
-    userName: "Hassan Al Meftah",
-    phone: "0644679856",
-    unityPrice: 200,
-    quantity: 3,
-    product: "64663e3a869e5a2feb020937",
-    status: "Pending",
-    createdAt: "2023-05-18T15:46:16.093Z",
-    updatedAt: "2023-05-18T15:46:16.093Z",
-    __v: 0,
-  },
-];
-
+async function getAllOrders() {
+  const { data } = await axios.get("http://localhost:5000/api/orders");
+  return data.orders;
+}
 const OrdersPage = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["orders"],
+    queryFn: getAllOrders,
+  });
+  let [color, setColor] = useState("#314D3E");
+
+  const stats = [
+    { name: "Total sales", stat: "30,000" },
+    { name: "Pending orders", stat: "250" },
+    { name: "Revenue generated", stat: "$80,000" },
+  ];
   return (
     <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">
@@ -185,14 +38,12 @@ const OrdersPage = () => {
             {stats.map((item) => (
               <div
                 key={item.name}
-                className="li bg-gradient- px overflow-hidden rounded-lg to-[#7a643c] to-50%  px-4 py-5 shadow sm:p-6"
+                className="overflow-hidden rounded-lg bg-[url('/assets/background.png')] bg-contain bg-no-repeat px-4 py-5 text-white shadow sm:p-6"
               >
-                <dt className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                <dt className="mb-1 text-3xl font-semibold tracking-tight ">
                   {item.stat}
                 </dt>
-                <dd className="truncate text-sm font-medium text-gray-500">
-                  {item.name}
-                </dd>
+                <dd className="truncate text-sm font-normal">{item.name}</dd>
               </div>
             ))}
           </dl>
@@ -200,19 +51,22 @@ const OrdersPage = () => {
         <div className="mt-4">
           <h1 className="text-lg">All Orders</h1>
         </div>
-        <div className="mt-4  flex items-center justify-between">
-          <div>
-            <p className="mb-3 text-gray-400">Monitor sales and status</p>
-
-            <div></div>
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <ClipLoader
+              color={color}
+              loading={isLoading}
+              size={150}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </div>
-          {/* Search */}
-          <div></div>
-        </div>
+        ) : (
+          <div>
+            <DataTable columns={columns} data={data} />
+          </div>
+        )}
         {/* table */}
-        <div>
-          <DataTable columns={columns} data={data} />
-        </div>
       </div>
     </div>
   );

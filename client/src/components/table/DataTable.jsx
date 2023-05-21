@@ -3,6 +3,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -14,21 +15,36 @@ import {
   TableRow,
 } from "./table";
 import Pagination from "./Pagination";
+import { useState } from "react";
+import Search from "./Search";
+import Filter from "./Filter";
+import { DataTableToolbar } from "./DataTableToolBar";
 
 export function DataTable({ columns, data }) {
+  const [columnFilters, setColumnFilters] = useState([]);
   const table = useReactTable({
     data,
     columns,
     initialState: {
       pagination: {
-        pageSize: 3,
+        pageSize: 6,
       },
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+    },
   });
+
   return (
     <div>
+      <div>
+        <DataTableToolbar table={table} />
+      </div>
+
       <div className="rounded-full	 border-0 outline-0	">
         <Table className="rounded-full">
           <TableHeader className=" bg-uiGray hover:bg-gray-200">

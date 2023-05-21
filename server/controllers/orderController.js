@@ -4,7 +4,8 @@ const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 
 const createOrder = async (req, res) => {
-  const { product } = req.body;
+  const { product, quantity, unityPrice } = req.body;
+  req.body.totalPrice = quantity * unityPrice;
   const dbProduct = await Product.findOne({ _id: product });
 
   if (!dbProduct) {

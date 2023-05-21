@@ -15,6 +15,10 @@ export default {
         pendingText: "#938406",
         unverifiedText: "#999999",
         pgNumberBg: "#E6E6E6",
+        filterTextColor: "#4C4C4C",
+      },
+      backgroundImage: {
+        colorful: "url('/assets/background.png')",
       },
     },
   },
