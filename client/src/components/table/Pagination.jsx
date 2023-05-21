@@ -11,7 +11,6 @@ export default function Pagination({
   pageCount,
   setPageIndex,
 }) {
-  console.log(pageCount);
   return (
     <nav className="flex h-[64px] items-center gap-32   bg-uiGray sm:px-0">
       {/* Previous page */}

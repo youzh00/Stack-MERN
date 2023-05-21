@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 async function getProducts() {
   const { data: products } = await axios.get(
@@ -42,7 +43,17 @@ export default function ProductPage() {
   };
   return (
     <div className="flex min-h-screen items-center justify-center gap-8 bg-white">
-      {!isLoading && (
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <ClipLoader
+            color="#314D3E"
+            loading={isLoading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      ) : (
         <>
           <div>
             <img

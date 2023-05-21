@@ -20,8 +20,6 @@ export const columns = [
     filterFn: "equalsString",
     meta: {
       getCellContext: (context) => {
-        // console.log("Inside columns ");
-        // console.log(context.cell.getValue());
         if (
           context.cell.getValue() === "pending" ||
           context.cell.getValue() === "Pending"

@@ -22,8 +22,7 @@ const getAllOrders = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const statusFilter = req.query.status; // Get the status filter from the query parameters
-  console.log("Status : ", statusFilter);
+  const statusFilter = req.query.status;
   let query = {};
 
   if (statusFilter === "verified") {
@@ -60,8 +59,31 @@ const deleteOrderById = async (req, res) => {
   }
   res.status(StatusCodes.ACCEPTED).json({ deletedOrder });
 };
+const getDashboardInfos = async (req, res) => {
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const lastThirtyDaysOrders = await Order.find({
+    createdAt: { $gte: thirtyDaysAgo },
+  });
+
+  const pendingOrders = lastThirtyDaysOrders.filter(
+    (order) => order.status === "pending"
+  );
+  const verifiedOrders = lastThirtyDaysOrders.filter(
+    (order) => order.status === "verified"
+  );
+  const totalRevenue = verifiedOrders.reduce((sum, curr) => {
+    return sum + curr.unityPrice * curr.quantity;
+  }, 0);
+
+  res.json({
+    totalSales: verifiedOrders.length,
+    pendingOrders: pendingOrders.length,
+    totalRevenue,
+  });
+};
 module.exports = {
   createOrder,
   getAllOrders,
   deleteOrderById,
+  getDashboardInfos,
 };

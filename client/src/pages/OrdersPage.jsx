@@ -15,17 +15,34 @@ async function getAllOrders() {
   const { data } = await axios.get("http://localhost:5000/api/orders");
   return data.orders;
 }
+
+async function getDashboardInfos() {
+  const { data } = await axios.get(
+    "http://localhost:5000/api/orders/dashboard"
+  );
+  return data;
+}
 const OrdersPage = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["orders"],
     queryFn: getAllOrders,
   });
-  let [color, setColor] = useState("#314D3E");
+
+  const { data: dashboardInfo, isLoading: dashboardIsLoading } = useQuery({
+    queryKey: ["dashboardInfo"],
+    queryFn: getDashboardInfos,
+  });
 
   const stats = [
-    { name: "Total sales", stat: "30,000" },
-    { name: "Pending orders", stat: "250" },
-    { name: "Revenue generated", stat: "$80,000" },
+    { name: "Total sales", stat: dashboardInfo?.totalSales || 0 },
+    { name: "Pending orders", stat: dashboardInfo?.pendingOrders || 0 },
+    {
+      name: "Revenue generated",
+      stat: new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(dashboardInfo?.totalRevenue || 0),
+    },
   ];
   return (
     <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -54,7 +71,7 @@ const OrdersPage = () => {
         {isLoading ? (
           <div className="flex items-center justify-center">
             <ClipLoader
-              color={color}
+              color="#314D3E"
               loading={isLoading}
               size={150}
               aria-label="Loading Spinner"
